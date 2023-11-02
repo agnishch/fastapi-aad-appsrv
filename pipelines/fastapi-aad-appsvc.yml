@@ -17,6 +17,10 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Set Azure Storage Access Key
+      run: echo "export ARM_ACCESS_KEY=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}" >> $GITHUB_ENV
+
 
     - name: Plan and Apply Infrastructure
       working-directory: infra
