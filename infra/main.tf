@@ -22,7 +22,7 @@ resource "azurerm_service_plan" "example_asp" {
   resource_group_name = var.rg_name
   location            = var.location
   os_type             = "Linux"
-  sku_name            = "F1"
+  sku_name            = "S1"
   depends_on          = [azurerm_resource_group.example_rg]
 }
 
