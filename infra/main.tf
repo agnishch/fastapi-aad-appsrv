@@ -10,7 +10,7 @@ resource "azurerm_resource_group" "example_rg" {
 }
 
 resource "azurerm_container_registry" "example_acr" {
-  name                     = "agnish-acr" # Replace with your desired ACR name
+  name                     = "agnishacr" # Replace with your desired ACR name
   resource_group_name      = var.rg_name
   location                 = var.location
   sku                      = "Basic" # Replace with the desired SKU (e.g., "Basic", "Standard", "Premium")
