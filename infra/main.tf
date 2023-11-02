@@ -17,16 +17,16 @@ resource "azurerm_container_registry" "example_acr" {
   depends_on               = [azurerm_resource_group.example_rg]
 }
 
-resource "null_resource" "run_script" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
+# resource "null_resource" "run_script" {
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
 
-  provisioner "local-exec" {
-    command = "bash ../scripts/init_acr.sh"
-  }
-  depends_on = [azurerm_container_registry.example_acr]
-}
+#   provisioner "local-exec" {
+#     command = "bash ../scripts/init_acr.sh"
+#   }
+#   depends_on = [azurerm_container_registry.example_acr]
+# }
 
 resource "azurerm_service_plan" "example_asp" {
   name                = "agnish-asp"
@@ -49,9 +49,9 @@ resource "azurerm_linux_web_app" "example_as" {
       docker_registry_url = azurerm_container_registry.example_acr.login_server
       docker_registry_password = azurerm_container_registry.example_acr.admin_password
       docker_registry_username = azurerm_container_registry.example_acr.admin_username
-      docker_image_name = "demo-first-img"
+      docker_image_name = ""
     }
   }
 
-  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp, null_resource.run_script]
+  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp]
 }
