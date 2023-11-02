@@ -15,6 +15,7 @@ resource "azurerm_container_registry" "example_acr" {
   location                 = var.location
   sku                      = "Basic" # Replace with the desired SKU (e.g., "Basic", "Standard", "Premium")
   depends_on               = [azurerm_resource_group.example_rg]
+  admin_enabled            = true
 }
 
 # resource "null_resource" "run_script" {
