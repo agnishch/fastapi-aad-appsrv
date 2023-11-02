@@ -50,9 +50,9 @@ resource "azurerm_linux_web_app" "example_as" {
       docker_registry_url = azurerm_container_registry.example_acr.docker_registry_url
       docker_registry_password = azurerm_container_registry.example_acr.admin_password
       docker_registry_username = azurerm_container_registry.example_acr.admin_username
-      docker_image_name = ""
+      docker_image_name = "demo-first-img"
     }
   }
 
-  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp]
+  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp, null_resource.run_script]
 }
