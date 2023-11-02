@@ -26,6 +26,7 @@ jobs:
     #     echo "export ARM_SUBSCRIPTION_ID=${{ vars.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
 
     - name: Plan and Apply Infrastructure
+      timeout-minutes: 10
       working-directory: infra
       run: |
         terraform init
