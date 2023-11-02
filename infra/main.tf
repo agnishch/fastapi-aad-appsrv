@@ -18,16 +18,16 @@ resource "azurerm_container_registry" "example_acr" {
   admin_enabled            = true
 }
 
-# resource "null_resource" "run_script" {
-#   triggers = {
-#     always_run = "${timestamp()}"
-#   }
+resource "null_resource" "run_script" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
 
-#   provisioner "local-exec" {
-#     command = "bash ../scripts/init_acr.sh"
-#   }
-#   depends_on = [azurerm_container_registry.example_acr]
-# }
+  provisioner "local-exec" {
+    command = "bash ../init_acr.sh"
+  }
+  depends_on = [azurerm_container_registry.example_acr]
+}
 
 resource "azurerm_service_plan" "example_asp" {
   name                = "agnish-asp"
@@ -47,7 +47,7 @@ resource "azurerm_linux_web_app" "example_as" {
   site_config {
     always_on = true
     application_stack {
-      docker_registry_url = azurerm_container_registry.example_acr.login_server
+      docker_registry_url = azurerm_container_registry.example_acr.docker_registry_url
       docker_registry_password = azurerm_container_registry.example_acr.admin_password
       docker_registry_username = azurerm_container_registry.example_acr.admin_username
       docker_image_name = ""
