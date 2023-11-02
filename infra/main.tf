@@ -17,6 +17,17 @@ resource "azurerm_container_registry" "example_acr" {
   depends_on               = [azurerm_resource_group.example_rg]
 }
 
+resource "null_resource" "run_script" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "bash ../scripts/init_acr.sh"
+  }
+  depends_on = [azurerm_container_registry.example_acr]
+}
+
 resource "azurerm_service_plan" "example_asp" {
   name                = "agnish-asp"
   resource_group_name = var.rg_name
@@ -34,8 +45,13 @@ resource "azurerm_linux_web_app" "example_as" {
 
   site_config {
     always_on = true
-    linux_fx_version = "DOCKER|python:3.10-slim" # Replace with your container image and tag
+    application_stack {
+      docker_registry_url = azurerm_container_registry.example_acr.login_server
+      docker_registry_password = azurerm_container_registry.example_acr.admin_password
+      docker_registry_username = azurerm_container_registry.example_acr.admin_username
+      docker_image_name = "demo-first-img"
+    }
   }
 
-  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp, azurerm_resource_group.example_rg]
+  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp, null_resource.run_script]
 }
