@@ -16,5 +16,5 @@
   }
 
   output "app_service_name" {
-    value = azurerm_app_service.example_as.name
+    value = azurerm_linux_web_app.example_as.name
   }

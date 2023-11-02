@@ -34,7 +34,7 @@ resource "azurerm_linux_web_app" "example" {
 
   site_config {
     always_on = true
-    linux_fx_version = "DOCKER|python:3.10-slim" # Replace with your container image and tag
+    # linux_fx_version = "DOCKER|python:3.10-slim" # Replace with your container image and tag
   }
 
   depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp, azurerm_resource_group.example_rg]
