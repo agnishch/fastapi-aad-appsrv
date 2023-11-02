@@ -26,7 +26,7 @@ resource "azurerm_service_plan" "example_asp" {
   depends_on          = [azurerm_resource_group.example_rg]
 }
 
-resource "azurerm_linux_web_app" "example" {
+resource "azurerm_linux_web_app" "example_as" {
   name                = "agnish-appsvc"
   resource_group_name = var.rg_name
   location            = var.location
