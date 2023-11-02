@@ -12,6 +12,7 @@
 
   output "acr_admin_password" {
     value = azurerm_container_registry.example_acr.admin_password
+    sensitive = true
   }
 
   output "app_service_name" {

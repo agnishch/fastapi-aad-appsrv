@@ -19,6 +19,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Plan and Apply Infrastructure
+      timeout-minutes: 10
       working-directory: infra
       run: |
         terraform init

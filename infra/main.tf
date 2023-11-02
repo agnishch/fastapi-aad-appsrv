@@ -17,29 +17,25 @@ resource "azurerm_container_registry" "example_acr" {
   depends_on               = [azurerm_resource_group.example_rg]
 }
 
-resource "azurerm_app_service_plan" "example_asp" {
+resource "azurerm_service_plan" "example_asp" {
   name                = "agnish-asp"
-  location            = var.location
   resource_group_name = var.rg_name
-  kind                = "Linux"
-
-  sku {
-    tier = "Free"
-    size = "F1"
-  }
-  depends_on               = [azurerm_resource_group.example_rg]
+  location            = var.location
+  os_type             = "Linux"
+  sku_name            = "F1"
+  depends_on          = [azurerm_resource_group.example_rg]
 }
 
-resource "azurerm_app_service" "example_as" {
+resource "azurerm_linux_web_app" "example" {
   name                = "agnish-appsvc"
-  location            = var.location
   resource_group_name = var.rg_name
-  app_service_plan_id = azurerm_app_service_plan.example_asp.id
+  location            = var.location
+  service_plan_id     = azurerm_service_plan.example_asp.id
 
   site_config {
     always_on = true
-    linux_fx_version = "PYTHON|3.10" # Replace with your container image and tag
+    linux_fx_version = "DOCKER|python:3.10-slim" # Replace with your container image and tag
   }
 
-  depends_on = [azurerm_container_registry.example_acr, azurerm_app_service_plan.example_asp, azurerm_resource_group.example_rg]
+  depends_on = [azurerm_container_registry.example_acr, azurerm_service_plan.example_asp, azurerm_resource_group.example_rg]
 }
