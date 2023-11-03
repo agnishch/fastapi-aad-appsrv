@@ -18,6 +18,12 @@ resource "azurerm_container_registry" "example_acr" {
   admin_enabled            = true
 }
 
+resource "azurerm_role_assignment" "example" {
+  scope                = azurerm_container_registry.example_acr.id
+  role_definition_name = "Contributor"
+  principal_id         = "10cd6875-bcf6-4f3f-b16f-991ff518656b"
+}
+
 resource "null_resource" "run_script" {
   triggers = {
     always_run = "${timestamp()}"
