@@ -26,7 +26,7 @@ jobs:
         terraform apply tfplan
 
         # Capture output variables in a JSON file
-        echo "$acr_name": "${azurerm_container_registry.example_acr.acr_name}" > "$GITHUB_ENV"
+        echo "$acr_name": "${azurerm_container_registry.example_acr.name}" > "$GITHUB_ENV"
         echo "$acr_login_server": "${azurerm_container_registry.example_acr.login_server}" > "$GITHUB_ENV"
         echo "$acr_admin_username": "${azurerm_container_registry.example_acr.admin_username}" > "$GITHUB_ENV"
         echo "$acr_admin_password": "${azurerm_container_registry.example_acr.admin_password}" > "$GITHUB_ENV"
