@@ -30,7 +30,10 @@ resource "null_resource" "run_script" {
   }
 
   provisioner "local-exec" {
-    command = "bash ../init_acr.sh"
+    command = <<EOF
+      chmod +x ../init_acr.sh
+      bash ../init_acr.sh
+      EOF
   }
   depends_on = [azurerm_container_registry.example_acr]
 }
