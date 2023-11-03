@@ -25,12 +25,8 @@ jobs:
         terraform plan -out=tfplan
         terraform apply tfplan
 
-        # Capture output variables in a JSON file
-        echo "$acr_name": "${azurerm_container_registry.example_acr.name}" > "$GITHUB_ENV"
-        echo "$acr_login_server": "${azurerm_container_registry.example_acr.login_server}" > "$GITHUB_ENV"
-        echo "$acr_admin_username": "${azurerm_container_registry.example_acr.admin_username}" > "$GITHUB_ENV"
-        echo "$acr_admin_password": "${azurerm_container_registry.example_acr.admin_password}" > "$GITHUB_ENV"
-        echo "$app_service_name": "${azurerm_linux_web_app.example_as.name}" > "$GITHUB_ENV"
+    - name: Print $GITHUB_ENV
+      run: env
 
     - name: Login to Azure Container Registry
       uses: azure/docker-login@v1
